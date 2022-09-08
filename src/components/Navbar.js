@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 class Navbar extends Component {
-    static contextType =ThemeContext;
 
   render() { 
-   const {isLightTheme, light, dark} = this.context;
-   const them = isLightTheme ? light: dark;
     return ( 
-      <nav style={{background: them.ui, color:them.syntax}}>
+        <ThemeContext.Consumer>{(context)=>{
+            const {isLightTheme, light, dark} = context;
+            const them = isLightTheme ? light: dark;
+            return (
+                <nav style={{background: them.ui, color:them.syntax}}>
         <h1>Context App</h1>
         <ul>
           <li>Home</li>
@@ -16,8 +17,10 @@ class Navbar extends Component {
           <li>Contact</li>
         </ul>
       </nav>
-    );
-  }
+            )
+  }}</ThemeContext.Consumer>
+  );
+}
 }
  
 export default Navbar;
